@@ -13,7 +13,7 @@ PortName: 5432
 
  jdbc/Parcial2 					  
 
-          #Integrates  		       Carnet
+          #Integrates  		      
 
  José Manuel Cerritos Estrada	  EE22004	||
  José Antonio Mena Avila		      MA99048	||
