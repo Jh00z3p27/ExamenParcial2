@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Materias</title>
+    </h:head>
+    <h:body>
+        <p:card style="margin: 3% 3% 3% 3%">
+            <f:facet name="title">
+                Formulario Materia
+            </f:facet>
+            <f:view>
+                <h:form id="materiaForm">
+                    <h:inputHidden id="id_materia" value="#{indexController2.materia.id_materia}"/>
+                    <p:panelGrid columns="1" layout="grid">
+                        <p:outputLabel value="Materia: "/>
+                        <p:inputText id="materia" value="#{indexController2.materia.materia}"/>
+
+                        <p:outputLabel value="Descripcion : "/>
+                        <p:inputText id="descripcion" value="#{indexController2.materia.descripcion}"/>
+
+                        <p:outputLabel value="Codigo Materia : "/>
+                        <p:inputText id="codigo_materia" value="#{indexController2.materia.codigo_materia}"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="4" layout="grid">
+                        <p:commandButton value="Guardar" actionListener="#{indexController2.guardarMateria}" 
+                                         update="tablaMaterias materiaForm"/>
+                    </p:panelGrid>
+                </h:form>
+            </f:view>
+        </p:card>    
+
+        <p:card style="margin: 1% 1% 1% 1%">
+            <h1>Listado de Materias</h1>
+            <h:form id="tablaMaterias">
+                <p:dataTable rows="5" paginator="true" paginatorPosition="bottom" 
+                             paginatorTemplate="{CurrentPageReport} {FirtsPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                             rowsPerPageTemplate="5,10,{ShowAll|'All'}"
+                             value="#{indexController2.materiasList}" var="materia">
+                    <p:column>
+                        <f:facet name="header">ID MATERIA</f:facet>
+                        <span>#{materia.id_materia}</span>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Materia </f:facet>
+                        <span>#{materia.materia}</span>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Descripcion </f:facet>
+                        <span>#{materia.descripcion}</span>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Codigo Materia </f:facet>
+                        <span>#{materia.codigo_materia}</span>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Opciones </f:facet>
+                        <p:commandButton value="Editar" icon="pi pi-pencil" update="materiaForm"
+                                         actionListener="#{indexController2.llenarFormEditar(materia)}"/>
+                        <p:spacer width="10"/>
+                        <p:commandButton value="Eliminar" style="background-color: #EC7063" icon="pi pi-trash" update="tablaMaterias" 
+                                         action="#{indexController2.eliminarMateria(materia)}">
+                            <p:confirm header="Confirmar" 
+                                       message="Esta seguro que desea eliminar la materia: #{materia.materia}?" icon="pi pi-info-circle"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+                </p:confirmDialog>
+
+            </h:form>
+        </p:card>
+    </h:body>
+</html>

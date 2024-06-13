@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Sistema de Inscripción de Materias</title>
+    </h:head>
+    <h:body>
+        <p:card>
+            <f:facet name="title">
+                Inscripciones Actuales
+            </f:facet>
+            <p:panelGrid layout="grid">
+                <p:button value="Alumnos" outcome="/alumnos.xhtml" />
+                <p:button value="Materias" outcome="/materias.xhtml" />
+            </p:panelGrid>
+        </p:card>
+
+        <p:card>
+            <h:form id="inscripcionForm">
+                <p:panel header="Gestión de Inscripciones">
+                    <p:messages id="messages" showDetail="true"/>
+
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel for="alumno" value="Alumno:" />
+                        <p:selectOneMenu id="alumno" value="#{indexController.alumno}">
+                            <f:selectItem itemLabel="Seleccione Alumno" itemValue="" />
+                            <f:selectItems value="#{indexController.alumnosList}" var="alumno"
+                                           itemLabel="#{alumno.nombre}" itemValue="#{alumno}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="materia" value="Materia:" />
+                        <p:selectOneMenu id="materia" value="#{indexController2.materia}">
+                            <f:selectItem itemLabel="Seleccione Materia" itemValue="" />
+                            <f:selectItems value="#{indexController2.materiasList}" var="materia"
+                                           itemLabel="#{materia.materia}" itemValue="#{materia}" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="anio" value="Año:" />
+                        <p:inputText id="anio" value="#{indexController3.inscripcion.anio}" />
+
+                        <p:outputLabel for="ciclo" value="Ciclo:" />
+                        <p:inputText id="ciclo" value="#{indexController3.inscripcion.ciclo}" />
+
+                        <p:outputLabel for="fechaInscripcion" value="Fecha de Inscripción:" />
+                        <p:inputText id="fechaInscripcion" value="#{indexController3.inscripcion.fechaInscripcion}" />
+                    </p:panelGrid>
+
+                    <p:commandButton value="Guardar" action="#{indexController3.guardarInscripcion}"
+                                     update="@form" icon="pi pi-check" />
+                </p:panel>
+
+                <p:dataTable value="#{indexController3.inscripcionesList}" var="inscripcion">
+                    <p:column headerText="Alumno">
+                        <h:outputText value="#{inscripcion.alumno.nombre}" />
+                    </p:column>
+                    <p:column headerText="Materia">
+                        <h:outputText value="#{inscripcion.materia.nombre}" />
+                    </p:column>
+                    <p:column headerText="Año">
+                        <h:outputText value="#{inscripcion.anio}" />
+                    </p:column>
+                    <p:column headerText="Ciclo">
+                        <h:outputText value="#{inscripcion.ciclo}" />
+                    </p:column>
+                    <p:column headerText="Fecha de Inscripción">
+                        <h:outputText value="#{inscripcion.fechaInscripcion}" />
+                    </p:column>
+                    <p:column headerText="Acciones">
+                        <p:commandButton value="Editar" action="#{indexController3.llenarFormEditar(inscripcion)}"
+                                         update="@form" icon="pi pi-pencil" />
+                        <p:commandButton value="Eliminar" action="#{indexController3.eliminarInscripcion(inscripcion)}"
+                                         update="@form" icon="pi pi-trash" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:card>
+    </h:body>
+
+
+</html>
